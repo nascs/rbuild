@@ -261,6 +261,10 @@ actions:
         echo "RBUILD_UBOOT='EFI-System'" >> /etc/radxa_image_fingerprint
         echo "RBUILD_UBOOT_VERSION='1'" >> /etc/radxa_image_fingerprint
       fi
+      if grep -q "Radxa ROCK Pi 4C" /proc/device-tree/model; then
+        sed -i 's/console=ttyFIQ0/console=ttyS2/g' /etc/kernel/cmdline
+        sudo u-boot-update
+      fi
 
   - action: recipe
     description: Clean up rootfs
